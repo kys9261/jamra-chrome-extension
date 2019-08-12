@@ -167,6 +167,12 @@ function getBbsDetail(ot, id) {
         $(".modal-body").html(detail.c.replace(/(\r\n|\n|\r)/gm, "<br>"));
         $(".modal-writer").text(detail.wn);
         $(".modal-date").text(new Date(detail.updated).format("yyyy.MM.dd E a/p HH:mm"));
+
+        var imgCount = detail.ic;
+        for(var i=0; i<imgCount; i++) {
+            $(".modal-body").append("<br><img src='http://s3-ap-northeast-1.amazonaws.com/sm-tokyo/"+detail.aid+i+".png'>");
+        }
+
         $('.modal').modal('show');
     });
 }
