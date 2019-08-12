@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.container {
+    padding: 0;
+    width: 342px;
+}
+
+.logo {
+    width: 342px;
+    height: 102px;
+    background-image: url("../img/logo.jpeg");
+}
+.groupInfo {
+    padding-left: 8px;
+    padding-top: 8px;
+}
+
+ul {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.schedule {
+    height: 100px; 
+    border-bottom: 0.5px solid #eee;
+}
+
+.schedule .title {
+    color: #ED7C67;
+}
+
+.schedule .date {
+    width: 55px;
+    border: 1px solid #bababa;
+    border-radius: 10px;
+    text-align: center;
+    height: 60px;
+    float: left;
+}
+
+.dayOfWeek {
+    background: #ED7C67;
+    border-radius: 9px 9px 0 0;
+    color: white;
+}
+
+.dateNumber {
+    font-size: 22px;
+    line-height: 38px;
+}
+
+.infomation {
+    line-height: -2px;
+    float: left;
+    margin-left: 10px;
+}
+
+i.far, i.fas {
+    width: 15px;
+    margin-right: 5px;
+}
+
+.fa-map-marker-alt {
+    padding-left: 2px;
+}
+
+.today-schedule ul {
+    margin-bottom: 0;
+}
+
+.today-schedule .title, .today-schedule .desc>font {
+    color: #50A8BC;
+}
+.today-schedule .dayOfWeek {
+    background: #50A8BC;
+}
+
+.today-schedule .desc {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.today-schedule .schedule {
+    height: 115px;
+}
+
+.bbs-item {
+    border-bottom: 0.5px solid #eee;
+    padding: 10px 5px;
+}
+
+.bbs-sticky {
+    background: #ED7C67;
+    color: white;
+    font-size: 12px;
+    width: 30px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.bbs-title {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.bbs-desc {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.bbs-writer {
+    display: inline-block;
+
+}
+
+.bbs-date {
+    display: inline-block;
+    float: right;
+    font-size: 11px;
+    line-height: 22px;
+    color: #908e8e;
+}
+
+.bbs li:hover {
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.modal-backdrop {
+    z-index: 0;
+}
+
+.modal-date {
+    color: #908e8e;
+}
+
+.modal-header .close {
+    margin-top: -70px;
+}
