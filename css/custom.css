@@ -156,3 +156,37 @@ i.far, i.fas {
 .modal-header .close {
     margin-top: -70px;
 }
+
+.menu-title {
+    text-align: center;
+    border-bottom: 0.5px solid #eee;
+}
+
+.profileImg {
+    width: 40px;
+    border-radius: 50%;
+    padding: 5px 0;
+    margin-right: 5px;
+}
+
+.comment {
+    margin-bottom: 3px;
+    border-bottom: 1px solid #e4e2e2;
+    overflow: auto;
+}
+
+.commentInfo {
+    display: inline-block;
+    width: 220px;
+    float: right;
+}
+
+.commentCreated {
+    float: right;
+    color: #908e8e;
+}
+
+.commenter {
+    font-weight: bold;
+    margin-bottom: 5px;
+}

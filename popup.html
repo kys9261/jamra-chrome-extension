@@ -19,7 +19,15 @@
        </div>
 
        <div class="today-schedule">
-            <ul></ul>
+            <ul class="scheduleList"></ul>
+            <div class="attendants" style="display: none;">
+                <div class="menu-title">번개참석자<i class="fas fa-chevron-down"></i></div>
+                <div class="collapse" id="todayAttendants">
+                    <div class="card card-body">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
        </div>
 
        <div class="bbs">
@@ -39,6 +47,11 @@
                   </button>
                 </div>
                 <div class="modal-body">
+                </div>
+                <div class="modal-footer" style="text-align: left; padding: 0;">
+                     <div class="commentList">
+                         <ul></ul>
+                     </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>

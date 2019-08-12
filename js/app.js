@@ -6,10 +6,14 @@ $( document ).ready(function() {
         getBbsDetail(ot, id);
     });
 
+    $(document).on("click",".menu-title", function(){
+        $('#todayAttendants').collapse('toggle');
+    });
+
     Date.prototype.format = function(f) {
         if (!this.valueOf()) return " ";
      
-        var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+        var weekName = ["일", "월", "화", "수", "목", "금", "토"];
         var d = this;
          
         return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
@@ -31,8 +35,11 @@ $( document ).ready(function() {
     String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
     String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
     Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+
 });
 
+const imgHost = "http://s3-ap-northeast-1.amazonaws.com/sm-tokyo/";
 const week = ['일', '월', '화', '수', '목', '금', '토'];
 
 var groupinfo = {
@@ -124,8 +131,17 @@ $.ajax(today).done(function (response) {
         "<div class='price'><i class='fas fa-won-sign'></i>" + event.price + "</div>" +
         "</div>" +
         "</div><li>";
+    $(".scheduleList").append(tag);
 
-    $(".today-schedule ul").append(tag);
+    tag = "<li><div><img src='"+imgHost+response.ei.hid+".png' class='profileImg'>"+response.ei.hn+"(벙주)</div></li>"    
+    $("#todayAttendants ul").append(tag);    
+
+    for(var i=0; i<response.l.length; i++){
+        tag = "<li><div><img src='"+imgHost+response.l[i].mid+".png' class='profileImg'>"+response.l[i].mn+"</div></li>"    
+        $("#todayAttendants ul").append(tag);
+    }    
+
+    $(".attendants").css("display","block");
 });
 
 var bbs = {
@@ -170,7 +186,22 @@ function getBbsDetail(ot, id) {
 
         var imgCount = detail.ic;
         for(var i=0; i<imgCount; i++) {
-            $(".modal-body").append("<br><img src='http://s3-ap-northeast-1.amazonaws.com/sm-tokyo/"+detail.aid+i+".png'>");
+            $(".modal-body").append("<br><img src='"+imgHost+detail.aid+i+".png'>");
+        }
+
+        var comments = response.cs;
+        $(".commentList ul").empty();
+        for(var i=0; i<comments.length; i++){
+            var tag = "<li>"+
+                        "<div class='comment'>"+
+                            "<img src='"+imgHost+comments[i].wid+".png' class='profileImg'>"+
+                            "<div class='commentInfo'>"+
+                            "<div class='commentCreated'>"+new Date(comments[i].updated).format("yyyy.MM.dd E a/p HH:mm")+"</div>"+
+                            "<div class='commenter'>"+comments[i].wn+"</div>"+
+                            "<div class='commentContent'>"+comments[i].c+"</div>"+
+                        "</div></div>"+
+                    "</li>";
+            $(".commentList ul").append(tag);
         }
 
         $('.modal').modal('show');
