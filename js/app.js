@@ -49,6 +49,8 @@ var groupinfo = {
 }
 
 $.ajax(groupinfo).done(function (response) {
+    $(".loading").remove();
+
     var description = response.g.ge.replace(/(\r\n|\n|\r)/gm, "<br>");
     $(".groupInfo").html(description);
 
