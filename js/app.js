@@ -1,3 +1,6 @@
+const imgHost = "http://s3-ap-northeast-1.amazonaws.com/sm-tokyo/";
+const week = ['일', '월', '화', '수', '목', '금', '토'];
+
 $( document ).ready(function() {
     $(document).on("click", ".bbs-item", function(){
         var ot = $(this).attr("data-ot");
@@ -13,7 +16,6 @@ $( document ).ready(function() {
     Date.prototype.format = function(f) {
         if (!this.valueOf()) return " ";
      
-        var weekName = ["일", "월", "화", "수", "목", "금", "토"];
         var d = this;
          
         return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
@@ -22,7 +24,7 @@ $( document ).ready(function() {
                 case "yy": return (d.getFullYear() % 1000).zf(2);
                 case "MM": return (d.getMonth() + 1).zf(2);
                 case "dd": return d.getDate().zf(2);
-                case "E": return weekName[d.getDay()];
+                case "E": return week[d.getDay()];
                 case "HH": return d.getHours().zf(2);
                 case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
                 case "mm": return d.getMinutes().zf(2);
@@ -39,8 +41,7 @@ $( document ).ready(function() {
 
 });
 
-const imgHost = "http://s3-ap-northeast-1.amazonaws.com/sm-tokyo/";
-const week = ['일', '월', '화', '수', '목', '금', '토'];
+
 
 var groupinfo = {
     "url": "https://jamra-api-server.herokuapp.com/groupinfo",
@@ -83,7 +84,7 @@ $.ajax(groupinfo).done(function (response) {
     for (var i = 2; i >= 0; i--) {
         if (new Date < new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8))) {
             var tag = "<li><div class='schedule'>" +
-                "<div class='title'><h4>" + mainSchedule[i].title + "</h4></div>" +
+                "<div class='title'><h5>" + mainSchedule[i].title + "</h5></div>" +
                 "<div class='date'>" +
                 "<div class='dayOfWeek'>" + week[new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8)).getDay()] + "요일</div>" +
                 "<div class='dateNumber'>" + Number(mainSchedule[i].date.toString().substring(6, 8)) + "</div>" +
@@ -224,7 +225,7 @@ function getBbsDetail(ot, id) {
         for(var i=0; i<comments.length; i++){
             var tag = "<li>"+
                         "<div class='comment'>"+
-                            "<img src='"+imgHost+comments[i].wid+".png' class='profileImg'>"+
+                            "<img src='"+imgHost+comments[i].wid+".png' class='profileImg' style='float: left;'>"+
                             "<div class='commentInfo'>"+
                             "<div class='commentCreated'>"+new Date(comments[i].updated).format("yyyy.MM.dd E a/p HH:mm")+"</div>"+
                             "<div class='commenter'>"+comments[i].wn+"</div>"+
