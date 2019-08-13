@@ -177,7 +177,7 @@ i.far, i.fas {
 
 .commentInfo {
     display: inline-block;
-    width: 220px;
+    width: 235px;
     float: right;
 }
 
@@ -189,4 +189,21 @@ i.far, i.fas {
 .commenter {
     font-weight: bold;
     margin-bottom: 5px;
+}
+
+.attatchImg {
+    transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in-out;
+}
+
+.attatchImg:hover {
+    transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
 }

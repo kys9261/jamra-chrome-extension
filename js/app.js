@@ -7,7 +7,7 @@ $( document ).ready(function() {
     });
 
     $(document).on("click",".menu-title", function(){
-        $('#todayAttendants').collapse('toggle');
+        $(this).next().collapse('toggle');
     });
 
     Date.prototype.format = function(f) {
@@ -54,6 +54,7 @@ $.ajax(groupinfo).done(function (response) {
     var mainSchedule = [];
 
     var event = {};
+    event.num = 1;
     event.date = response.g.e_d;
     event.time = response.g.e_t;
     event.price = response.g.ee;
@@ -62,6 +63,7 @@ $.ajax(groupinfo).done(function (response) {
     mainSchedule.push(event);
 
     event = {};
+    event.num = 2;
     event.date = response.g.e_d2;
     event.time = response.g.e_t2;
     event.price = response.g.ee2;
@@ -70,11 +72,12 @@ $.ajax(groupinfo).done(function (response) {
     mainSchedule.push(event);
 
     event = {};
+    event.num = 3;
     event.date = response.g.e_d3;
     event.time = response.g.e_t3;
     event.price = response.g.ee3;
     event.location = response.g.el3;
-    event.title = response.g.en3;
+    event.title = response.g.en3;  
     mainSchedule.push(event);
 
     for (var i = 2; i >= 0; i--) {
@@ -92,7 +95,34 @@ $.ajax(groupinfo).done(function (response) {
                 "</div>" +
                 "</div><li>";
 
-            $(".main-schedule ul").append(tag);
+            tag += "<div class='attendants'>"+
+                        "<div class='menu-title'>"+mainSchedule[i].date.toString().substring(5, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8)+"일 참석자<i class='fas fa-chevron-down'></i></div>"+
+                            "<div class='collapse' id='event"+i+"Attend'>"+
+                            "<div class='card card-body'>"+
+                                "<ul class='event"+mainSchedule[i].num+"'></ul>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>";
+
+            $(".main-schedule > ul").append(tag);
+        }
+    }
+
+    var memberList = response.m;
+    memberList.push(response.me);
+    
+    for(var i=0; i<memberList.length; i++){
+        if(memberList[i].ban == "N") {
+            var attend = "<li><div><img src='"+imgHost+memberList[i].mid+".png' class='profileImg'>"+memberList[i].mn+(memberList[i].key === "" ? "" : " / <font color='gray'>"+memberList[i].key+"</font>" )+"</div></li>";
+            if(memberList[i].ijo == "Y"){
+                $(".event1").append(attend);
+            } 
+            if(memberList[i].ijo2 == "Y") {
+                $(".event2").append(attend);
+            } 
+            if(memberList[i].ijo3 == "Y") {
+                $(".event3").append(attend);
+            }
         }
     }
 });
@@ -186,7 +216,7 @@ function getBbsDetail(ot, id) {
 
         var imgCount = detail.ic;
         for(var i=0; i<imgCount; i++) {
-            $(".modal-body").append("<br><img src='"+imgHost+detail.aid+i+".png'>");
+            $(".modal-body").append("<br><img src='"+imgHost+detail.aid+i+".png' class='attatchImg'>");
         }
 
         var comments = response.cs;
