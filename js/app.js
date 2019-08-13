@@ -41,8 +41,6 @@ $( document ).ready(function() {
 
 });
 
-
-
 var groupinfo = {
     "url": "https://jamra-api-server.herokuapp.com/groupinfo",
     "method": "GET"
