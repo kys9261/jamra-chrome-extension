@@ -208,7 +208,6 @@ function getBbsDetail(ot, id) {
     }
 
     $.ajax(bbsDetail).done(function (response) {
-        console.log(response);
         var detail = response.atc;
         $(".modal-title").text(detail.at);
         $(".modal-body").html(detail.c.replace(/(\r\n|\n|\r)/gm, "<br>"));
@@ -227,7 +226,7 @@ function getBbsDetail(ot, id) {
                         "<div class='comment'>"+
                             "<img src='"+imgHost+comments[i].wid+".png' class='profileImg' style='float: left;'>"+
                             "<div class='commentInfo'>"+
-                            "<div class='commentCreated'>"+new Date(comments[i].updated).format("yyyy.MM.dd E a/p HH:mm")+"</div>"+
+                            "<div class='commentCreated'>"+new Date(comments[i].updated+'Z').format("yyyy.MM.dd E a/p HH:mm")+"</div>"+
                             "<div class='commenter'>"+comments[i].wn+"</div>"+
                             "<div class='commentContent'>"+comments[i].c+"</div>"+
                         "</div></div>"+
