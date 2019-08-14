@@ -57,6 +57,8 @@ ajaxGroupInfo(function(response) {
     event.price = response.g.ee;
     event.location = response.g.el;
     event.title = response.g.en;
+    event.max = response.g.emm;
+    event.attend = 0;
     mainSchedule.push(event);
 
     event = {};
@@ -66,6 +68,8 @@ ajaxGroupInfo(function(response) {
     event.price = response.g.ee2;
     event.location = response.g.el2;
     event.title = response.g.en2;
+    event.max = response.g.emm2;
+    event.attend = 0;
     mainSchedule.push(event);
 
     event = {};
@@ -75,11 +79,13 @@ ajaxGroupInfo(function(response) {
     event.price = response.g.ee3;
     event.location = response.g.el3;
     event.title = response.g.en3;
+    event.max = response.g.emm3;
+    event.attend = 0;
     mainSchedule.push(event);
 
     for (var i = 2; i >= 0; i--) {
         if (new Date < new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8))) {
-            var tag = "<li><div class='schedule'>" +
+            var tag = "<li><div class='schedule event"+mainSchedule[i].num+"'>" +
                 "<div class='title'><h5>" + mainSchedule[i].title + "</h5></div>" +
                 "<div class='date'>" +
                 "<div class='dayOfWeek'>" + week[new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8)).getDay()] + "요일</div>" +
@@ -96,7 +102,7 @@ ajaxGroupInfo(function(response) {
                 "<div class='menu-title'>" + mainSchedule[i].date.toString().substring(5, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8) + "일 참석자<i class='fas fa-chevron-down'></i></div>" +
                 "<div class='collapse' id='event" + i + "Attend'>" +
                 "<div class='card card-body'>" +
-                "<ul class='event" + mainSchedule[i].num + "'></ul>" +
+                "<ul class='event" + mainSchedule[i].num + "-list'></ul>" +
                 "</div>" +
                 "</div>" +
                 "</div>";
@@ -112,16 +118,22 @@ ajaxGroupInfo(function(response) {
         if (memberList[i].ban == "N") {
             var attend = "<li><div><img src='" + imgHost + memberList[i].mid + ".png' class='profileImg'>" + memberList[i].mn + (memberList[i].key === "" ? "" : " / <font color='gray'>" + memberList[i].key + "</font>") + "</div></li>";
             if (memberList[i].ijo == "Y") {
-                $(".event1").append(attend);
+                $(".event1-list").append(attend);
+                mainSchedule[0].attend++;
             }
             if (memberList[i].ijo2 == "Y") {
-                $(".event2").append(attend);
+                $(".event2-list").append(attend);
+                mainSchedule[1].attend++;
             }
             if (memberList[i].ijo3 == "Y") {
-                $(".event3").append(attend);
+                $(".event3-list").append(attend);
+                mainSchedule[2].attend++;
             }
         }
     }
+    $(".event1 .title h5").append(" ("+mainSchedule[0].attend+"/"+mainSchedule[0].max+")");
+    $(".event2 .title h5").append(" ("+mainSchedule[1].attend+"/"+mainSchedule[1].max+")");
+    $(".event3 .title h5").append(" ("+mainSchedule[2].attend+"/"+mainSchedule[2].max+")");
 });
 
 ajaxToday(function(response){
@@ -140,7 +152,7 @@ ajaxToday(function(response){
     event.currentMenber = response.ei.cur;
 
     var tag = "<li><div class='schedule'>" +
-        "<div class='title'><h4><i class='fas fa-bolt'></i>" + event.title + "(" + event.currentMenber + "/" + event.max + ")</h4></div>" +
+        "<div class='title'><h5><i class='fas fa-bolt'></i>" + event.title + " (" + event.currentMenber + "/" + event.max + ")</h5></div>" +
         "<div class='desc'>최소 <font>" + event.min + "</font>명 이상이면 진행합니다.</div>" +
         "<div class='date'>" +
         "<div class='dayOfWeek'>" + week[new Date(event.date.toString().substring(0, 4) + '-' + event.date.toString().substring(5, 6) + '-' + event.date.toString().substring(6, 8)).getDay()] + "요일</div>" +
