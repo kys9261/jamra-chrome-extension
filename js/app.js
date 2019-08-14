@@ -1,24 +1,27 @@
 const imgHost = "http://s3-ap-northeast-1.amazonaws.com/sm-tokyo/";
 const week = ['일', '월', '화', '수', '목', '금', '토'];
 
-$( document ).ready(function() {
-    $(document).on("click", ".bbs-item", function(){
+$(document).ready(function () {
+    //get bbs detail
+    $(document).on("click", ".bbs-item", function () {
         var ot = $(this).attr("data-ot");
         var id = $(this).attr("data-bbsid");
 
         getBbsDetail(ot, id);
     });
 
-    $(document).on("click",".menu-title", function(){
+    //attent menu
+    $(document).on("click", ".menu-title", function () {
         $(this).next().collapse('toggle');
     });
 
-    Date.prototype.format = function(f) {
+    //set date format
+    Date.prototype.format = function (f) {
         if (!this.valueOf()) return " ";
-     
+
         var d = this;
-         
-        return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+
+        return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function ($1) {
             switch ($1) {
                 case "yyyy": return d.getFullYear();
                 case "yy": return (d.getFullYear() % 1000).zf(2);
@@ -34,19 +37,12 @@ $( document ).ready(function() {
             }
         });
     };
-    String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
-    String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
-    Number.prototype.zf = function(len){return this.toString().zf(len);};
-
-
+    String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
+    String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
+    Number.prototype.zf = function (len) { return this.toString().zf(len); };
 });
 
-var groupinfo = {
-    "url": "https://jamra-api-server.herokuapp.com/groupinfo",
-    "method": "GET"
-}
-
-$.ajax(groupinfo).done(function (response) {
+ajaxGroupInfo(function(response) {
     $(".loading").remove();
 
     var description = response.g.ge.replace(/(\r\n|\n|\r)/gm, "<br>");
@@ -78,7 +74,7 @@ $.ajax(groupinfo).done(function (response) {
     event.time = response.g.e_t3;
     event.price = response.g.ee3;
     event.location = response.g.el3;
-    event.title = response.g.en3;  
+    event.title = response.g.en3;
     mainSchedule.push(event);
 
     for (var i = 2; i >= 0; i--) {
@@ -96,14 +92,14 @@ $.ajax(groupinfo).done(function (response) {
                 "</div>" +
                 "</div><li>";
 
-            tag += "<div class='attendants'>"+
-                        "<div class='menu-title'>"+mainSchedule[i].date.toString().substring(5, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8)+"일 참석자<i class='fas fa-chevron-down'></i></div>"+
-                            "<div class='collapse' id='event"+i+"Attend'>"+
-                            "<div class='card card-body'>"+
-                                "<ul class='event"+mainSchedule[i].num+"'></ul>"+
-                            "</div>"+
-                        "</div>"+
-                    "</div>";
+            tag += "<div class='attendants'>" +
+                "<div class='menu-title'>" + mainSchedule[i].date.toString().substring(5, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8) + "일 참석자<i class='fas fa-chevron-down'></i></div>" +
+                "<div class='collapse' id='event" + i + "Attend'>" +
+                "<div class='card card-body'>" +
+                "<ul class='event" + mainSchedule[i].num + "'></ul>" +
+                "</div>" +
+                "</div>" +
+                "</div>";
 
             $(".main-schedule > ul").append(tag);
         }
@@ -111,34 +107,28 @@ $.ajax(groupinfo).done(function (response) {
 
     var memberList = response.m;
     memberList.push(response.me);
-    
-    for(var i=0; i<memberList.length; i++){
-        if(memberList[i].ban == "N") {
-            var attend = "<li><div><img src='"+imgHost+memberList[i].mid+".png' class='profileImg'>"+memberList[i].mn+(memberList[i].key === "" ? "" : " / <font color='gray'>"+memberList[i].key+"</font>" )+"</div></li>";
-            if(memberList[i].ijo == "Y"){
+
+    for (var i = 0; i < memberList.length; i++) {
+        if (memberList[i].ban == "N") {
+            var attend = "<li><div><img src='" + imgHost + memberList[i].mid + ".png' class='profileImg'>" + memberList[i].mn + (memberList[i].key === "" ? "" : " / <font color='gray'>" + memberList[i].key + "</font>") + "</div></li>";
+            if (memberList[i].ijo == "Y") {
                 $(".event1").append(attend);
-            } 
-            if(memberList[i].ijo2 == "Y") {
+            }
+            if (memberList[i].ijo2 == "Y") {
                 $(".event2").append(attend);
-            } 
-            if(memberList[i].ijo3 == "Y") {
+            }
+            if (memberList[i].ijo3 == "Y") {
                 $(".event3").append(attend);
             }
         }
     }
 });
 
-var today = {
-    "url": "https://jamra-api-server.herokuapp.com/today",
-    "method": "GET"
-}
-
-$.ajax(today).done(function (response) {
-
-    if(response.ei == undefined) { 
+ajaxToday(function(response){
+    if (response.ei == undefined) {
         return;
     }
-    
+
     var event = {};
     event.date = response.ei.e_d;
     event.time = response.ei.e_t;
@@ -164,46 +154,44 @@ $.ajax(today).done(function (response) {
         "</div><li>";
     $(".scheduleList").append(tag);
 
-    tag = "<li><div><img src='"+imgHost+response.ei.hid+".png' class='profileImg'>"+response.ei.hn+"(벙주)</div></li>"    
-    $("#todayAttendants ul").append(tag);    
+    tag = "<li><div><img src='" + imgHost + response.ei.hid + ".png' class='profileImg'>" + response.ei.hn + "(벙주)</div></li>"
+    $("#todayAttendants ul").append(tag);
 
-    for(var i=0; i<response.l.length; i++){
-        tag = "<li><div><img src='"+imgHost+response.l[i].mid+".png' class='profileImg'>"+response.l[i].mn+"</div></li>"    
-        $("#todayAttendants ul").append(tag);
-    }    
+    if (response.l != null) {
+        for (var i = 0; i < response.l.length; i++) {
+            tag = "<li><div><img src='" + imgHost + response.l[i].mid + ".png' class='profileImg'>" + response.l[i].mn + "</div></li>"
+            $("#todayAttendants ul").append(tag);
+        }
+    }
 
-    $(".attendants").css("display","block");
+    $(".attendants").css("display", "block");
 });
 
-var bbs = {
-    "url": "https://jamra-api-server.herokuapp.com/bbs/list",
-    "method": "GET"
-}
+ajaxBbsList(function(response) {
+    var bbsList = response.cs.splice(0, 7);
+    var bbsTitleArr = [];
 
-$.ajax(bbs).done(function (response) {
-    var bbsList = response.cs.splice(0,7);
-    
-    for(var i =0; i < 7; i++) {
+    for (var i = 0; i < 7; i++) {
         var date = new Date((bbsList[i].ot + 1000000000) * 1000);
+        var tag = "<li>" +
+            "<div class='bbs-item' data-ot='" + bbsList[i].ot + "' data-bbsid='" + bbsList[i].id + "'>" +
+            (bbsList[i].w_t === 2000000000 ? "<div class='bbs-sticky'>필독</div>" : "") +
+            "<div class='bbs-title'>" + bbsList[i].at + "</div>" +
+            "<div class='bbs-counter'><i class='fas fa-thumbs-up'></i>" + bbsList[i].lc + "<i class='fas fa-comment'></i>" + bbsList[i].rn + "</div>" +
+            "<div class='bbs-desc'>" + bbsList[i].c + "</div>" +
+            "<div class='bbs-writer'>" + bbsList[i].wn + "</div>" +
+            "<div class='bbs-date'>" + date.getFullYear() + "." + date.getMonth() + "." + date.getDate() + " " + week[date.getDay()] + "요일 " + (date.getHours() >= 12 ? '오후' : '오전') + " " + (date.getHours() >= 13 ? date.getHours() - 12 : date.getHours()) + ":" + date.getMinutes() + "</div>" +
+            "</div>" +
+            "</li>";
 
-        var tag = "<li>"+
-                    "<div class='bbs-item' data-ot='"+bbsList[i].ot+"' data-bbsid='"+bbsList[i].id+"'>"+
-                        (bbsList[i].w_t === 2000000000 ? "<div class='bbs-sticky'>필독</div>" : "")+
-                        "<div class='bbs-title'>"+bbsList[i].at+"</div>"+
-                        "<div class='bbs-desc'>"+bbsList[i].c+"</div>"+
-                        "<div class='bbs-writer'>"+bbsList[i].wn+"</div>"+
-                        "<div class='bbs-date'>"+date.getFullYear()+"."+date.getMonth()+"."+date.getDate()+" "+week[date.getDay()]+"요일 "+(date.getHours() >= 12 ? '오후' : '오전') + " " + (date.getHours() >= 13 ? date.getHours() - 12 : date.getHours()) + ":" + date.getMinutes()+"</div>"+
-                    "</div>"+
-                "</li>";
-        
         $(".bbs ul").append(tag);
+        bbsTitleArr.push(bbsList[i].at);
     }
 });
 
-
 function getBbsDetail(ot, id) {
     var bbsDetail = {
-        "url": "https://jamra-api-server.herokuapp.com/bbs/detail?ot="+ot+"&bbsId="+id,
+        "url": "https://jamra-api-server.herokuapp.com/bbs/detail?ot=" + ot + "&bbsId=" + id,
         "method": "GET"
     }
 
@@ -215,22 +203,22 @@ function getBbsDetail(ot, id) {
         $(".modal-date").text(new Date(detail.updated).format("yyyy.MM.dd E a/p HH:mm"));
 
         var imgCount = detail.ic;
-        for(var i=0; i<imgCount; i++) {
-            $(".modal-body").append("<br><img src='"+imgHost+detail.aid+i+".png' class='attatchImg'>");
+        for (var i = 0; i < imgCount; i++) {
+            $(".modal-body").append("<br><img src='" + imgHost + detail.aid + i + ".png' class='attatchImg'>");
         }
 
         var comments = response.cs;
         $(".commentList ul").empty();
-        for(var i=0; i<comments.length; i++){
-            var tag = "<li>"+
-                        "<div class='comment'>"+
-                            "<img src='"+imgHost+comments[i].wid+".png' class='profileImg' style='float: left;'>"+
-                            "<div class='commentInfo'>"+
-                            "<div class='commentCreated'>"+new Date(comments[i].updated+'Z').format("yyyy.MM.dd E a/p HH:mm")+"</div>"+
-                            "<div class='commenter'>"+comments[i].wn+"</div>"+
-                            "<div class='commentContent'>"+comments[i].c+"</div>"+
-                        "</div></div>"+
-                    "</li>";
+        for (var i = 0; i < comments.length; i++) {
+            var tag = "<li>" +
+                "<div class='comment'>" +
+                "<img src='" + imgHost + comments[i].wid + ".png' class='profileImg' style='float: left;'>" +
+                "<div class='commentInfo'>" +
+                "<div class='commentCreated'>" + new Date(comments[i].updated + 'Z').format("yyyy.MM.dd E a/p HH:mm") + "</div>" +
+                "<div class='commenter'>" + comments[i].wn + "</div>" +
+                "<div class='commentContent'>" + comments[i].c + "</div>" +
+                "</div></div>" +
+                "</li>";
             $(".commentList ul").append(tag);
         }
 

@@ -2,16 +2,19 @@
     "manifest_version": 2,
     "name": "Jamra Somoim",
     "description": "Jamra Somoim Extension",
-    "version": "1.3",
+    "version": "2.0",
     "browser_action": {
         "default_icon": "img/icon.png",
         "default_popup": "popup.html"
     },
     "permissions": [
-        "activeTab"
+        "activeTab", "storage", "notifications"
     ],
     "content_scripts": [{
-     "js": ["js/jquery.min.js", "js/bootstrap.min.js", "js/app.js"],
+     "js": ["js/jquery.min.js", "js/bootstrap.min.js", "js/ajax.js", "js/app.js"],
      "matches": ["http://*/*", "https://*/*"]
-   }]
+   }],
+   "background": {
+    "scripts": ["js/jquery.min.js", "js/ajax.js", "js/cron.js", "js/noti.js", "js/storage.js"]
+   }
 }
