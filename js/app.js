@@ -83,13 +83,19 @@ ajaxGroupInfo(function(response) {
     event.attend = 0;
     mainSchedule.push(event);
 
+    var today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+
     for (var i = 2; i >= 0; i--) {
-        if (new Date < new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8))) {
+        if (today <= new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8))) {
             var tag = "<li><div class='schedule event"+mainSchedule[i].num+"'>" +
                 "<div class='title'><h5>" + mainSchedule[i].title + "</h5></div>" +
                 "<div class='date'>" +
                 "<div class='dayOfWeek'>" + week[new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8)).getDay()] + "요일</div>" +
-                "<div class='dateNumber'>" + Number(mainSchedule[i].date.toString().substring(6, 8)) + "</div>" +
+                "<div class='dateNumber'>" + (Number(mainSchedule[i].date.toString().substring(6, 8)) == today.getDate() ? '오늘' : Number(mainSchedule[i].date.toString().substring(6, 8))) + "</div>" +
                 "</div>" +
                 "<div class='infomation'>" +
                 "<div class='datetime'><i class='far fa-clock'></i></span>" + mainSchedule[i].date.toString().substring(0, 4) + '/' + mainSchedule[i].date.toString().substring(5, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8) + " " + (mainSchedule[i].time / 100 >= 12 ? '오후' : '오전') + " " + parseInt(mainSchedule[i].time / 100) + "시 " + mainSchedule[i].time % 100 + "분</div>" +
@@ -189,7 +195,7 @@ ajaxBbsList(function(response) {
             "<div class='bbs-item' data-ot='" + bbsList[i].ot + "' data-bbsid='" + bbsList[i].id + "'>" +
             (bbsList[i].w_t === 2000000000 ? "<div class='bbs-sticky'>필독</div>" : "") +
             "<div class='bbs-title'>" + bbsList[i].at + "</div>" +
-            "<div class='bbs-counter'><i class='fas fa-thumbs-up'></i>" + bbsList[i].lc + "<i class='fas fa-comment'></i>" + bbsList[i].rn + "</div>" +
+            "<div class='bbs-counter'><i class='fas fa-thumbs-up'></i>" + (bbsList[i].lc == undefined ? '0' : bbsList[i].lc) + "<i class='fas fa-comment'></i>" + bbsList[i].rn + "</div>" +
             "<div class='bbs-desc'>" + bbsList[i].c + "</div>" +
             "<div class='bbs-writer'>" + bbsList[i].wn + "</div>" +
             "<div class='bbs-date'>" + date.getFullYear() + "." + date.getMonth() + "." + date.getDate() + " " + week[date.getDay()] + "요일 " + (date.getHours() >= 12 ? '오후' : '오전') + " " + (date.getHours() >= 13 ? date.getHours() - 12 : date.getHours()) + ":" + date.getMinutes() + "</div>" +

@@ -2,13 +2,13 @@
     "manifest_version": 2,
     "name": "Jamra Somoim",
     "description": "Jamra Somoim Extension",
-    "version": "2.0",
+    "version": "2.2",
     "browser_action": {
         "default_icon": "img/icon.png",
         "default_popup": "popup.html"
     },
     "permissions": [
-        "activeTab", "storage", "notifications"
+        "activeTab", "storage", "notifications", "http://s3-ap-northeast-1.amazonaws.com/", "https://jamra-api-server.herokuapp.com/"
     ],
     "content_scripts": [{
      "js": ["js/jquery.min.js", "js/bootstrap.min.js", "js/ajax.js", "js/app.js"],

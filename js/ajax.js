@@ -1,6 +1,7 @@
+const serverHost = "https://jamra-api-server.herokuapp.com";
 function ajaxGroupInfo(callback) {
     var groupinfo = {
-        "url": "https://jamra-api-server.herokuapp.com/groupinfo",
+        "url": serverHost+"/groupinfo",
         "method": "GET"
     }
 
@@ -11,7 +12,7 @@ function ajaxGroupInfo(callback) {
 
 function ajaxToday(callback) {
     var today = {
-        "url": "https://jamra-api-server.herokuapp.com/today",
+        "url": serverHost+"/today",
         "method": "GET"
     }
 
@@ -22,7 +23,7 @@ function ajaxToday(callback) {
 
 function ajaxBbsList(callback) {
     var bbs = {
-        "url": "https://jamra-api-server.herokuapp.com/bbs/list",
+        "url": serverHost+"/bbs/list",
         "method": "GET"
     }
 
