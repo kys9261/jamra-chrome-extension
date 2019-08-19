@@ -4,6 +4,9 @@ setInterval(function() {
     });
 
     ajaxToday(function(response) {
+        if(response.ei == null){
+            return;
+        }
         todayUpdateCheck(response.ei.en);
     });
     
