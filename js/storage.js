@@ -6,7 +6,7 @@ function scheduleUpdateCheck(titleArr) {
             for(var i=0; i<titleArr.length; i++) {
                 if(!items.schedule.includes(titleArr[i])){
                     if(titleArr[i] !== 'none') {
-                        notification('[JAMRA] 새로운 정모 일정이 등록되었습니다.', titleArr[i]);
+                        notification('[JAMRA]새로운 정모 일정 알림!!', titleArr[i]);
                     }
                     updateData('schedule', {'schedule': titleArr});
                 } 
@@ -21,7 +21,7 @@ function todayUpdateCheck(todayTitle) {
             chrome.storage.sync.set({'today': todayTitle});
         } else {
             if(items.today != todayTitle) {
-                notification('[JAMRA] 새로운 번개 일정이 등록되었습니다.', todayTitle);
+                notification('[JAMRA]새로운 번개 일정 알림!!', todayTitle);
                 updateData('today', {'today': todayTitle});
             }
         }
@@ -35,7 +35,7 @@ function bbsUpdateCheck(bbsTitleArr) {
         } else {
             for(var i=0; i<bbsTitleArr.length; i++) {
                 if(!items.bbs.includes(bbsTitleArr[i])){
-                    notification('[JAMRA] 새로운 게시물이 등록되었습니다.', bbsTitleArr[i]);
+                    notification('[JAMRA]새로운 게시물 등록 알림!!', bbsTitleArr[i]);
                     updateData('bbs', {'bbs': bbsTitleArr});
                 } 
             }
