@@ -90,15 +90,15 @@ ajaxGroupInfo(function(response) {
     today.setMilliseconds(0);
 
     for (var i = 2; i >= 0; i--) {
-        if (today <= new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8))) {
+        if (today <= new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(4, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8))) {
             var tag = "<li><div class='schedule event"+mainSchedule[i].num+"'>" +
                 "<div class='title'><h5>" + mainSchedule[i].title + "</h5></div>" +
                 "<div class='date'>" +
-                "<div class='dayOfWeek'>" + week[new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(5, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8)).getDay()] + "요일</div>" +
+                "<div class='dayOfWeek'>" + week[new Date(mainSchedule[i].date.toString().substring(0, 4) + '-' + mainSchedule[i].date.toString().substring(4, 6) + '-' + mainSchedule[i].date.toString().substring(6, 8)).getDay()] + "요일</div>" +
                 "<div class='dateNumber'>" + (Number(mainSchedule[i].date.toString().substring(6, 8)) == today.getDate() ? '오늘' : Number(mainSchedule[i].date.toString().substring(6, 8))) + "</div>" +
                 "</div>" +
                 "<div class='infomation'>" +
-                "<div class='datetime'><i class='far fa-clock'></i></span>" + mainSchedule[i].date.toString().substring(0, 4) + '/' + mainSchedule[i].date.toString().substring(5, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8) + " " + (mainSchedule[i].time / 100 >= 12 ? '오후' : '오전') + " " + parseInt(mainSchedule[i].time / 100) + "시 " + mainSchedule[i].time % 100 + "분</div>" +
+                "<div class='datetime'><i class='far fa-clock'></i></span>" + mainSchedule[i].date.toString().substring(0, 4) + '/' + mainSchedule[i].date.toString().substring(4, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8) + " " + (mainSchedule[i].time / 100 >= 12 ? '오후' : '오전') + " " + parseInt(mainSchedule[i].time / 100) + "시 " + mainSchedule[i].time % 100 + "분</div>" +
                 "<div class='location'><i class='fas fa-map-marker-alt'></i>" + mainSchedule[i].location + "</div>" +
                 "<div class='price'><i class='fas fa-won-sign'></i>" + mainSchedule[i].price + "</div>" +
                 "</div>" +
@@ -161,11 +161,11 @@ ajaxToday(function(response){
         "<div class='title'><h5><i class='fas fa-bolt'></i>" + event.title + " (" + event.currentMenber + "/" + event.max + ")</h5></div>" +
         "<div class='desc'>최소 <font>" + event.min + "</font>명 이상이면 진행합니다.</div>" +
         "<div class='date'>" +
-        "<div class='dayOfWeek'>" + week[new Date(event.date.toString().substring(0, 4) + '-' + event.date.toString().substring(5, 6) + '-' + event.date.toString().substring(6, 8)).getDay()] + "요일</div>" +
+        "<div class='dayOfWeek'>" + week[new Date(event.date.toString().substring(0, 4) + '-' + event.date.toString().substring(4, 6) + '-' + event.date.toString().substring(6, 8)).getDay()] + "요일</div>" +
         "<div class='dateNumber'>" + Number(event.date.toString().substring(6, 8)) + "</div>" +
         "</div>" +
         "<div class='infomation'>" +
-        "<div class='datetime'><i class='far fa-clock'></i></span>" + event.date.toString().substring(0, 4) + '/' + event.date.toString().substring(5, 6) + '/' + event.date.toString().substring(6, 8) + " " + (event.time / 100 >= 12 ? '오후' : '오전') + " " + (parseInt(event.time / 100) >= 13 ? parseInt(event.time / 100) - 12 : parseInt(event.time / 100)) + ":" + (event.time % 100 == 0 ? '00' : event.time % 100) + "</div>" +
+        "<div class='datetime'><i class='far fa-clock'></i></span>" + event.date.toString().substring(0, 4) + '/' + event.date.toString().substring(4, 6) + '/' + event.date.toString().substring(6, 8) + " " + (event.time / 100 >= 12 ? '오후' : '오전') + " " + (parseInt(event.time / 100) >= 13 ? parseInt(event.time / 100) - 12 : parseInt(event.time / 100)) + ":" + (event.time % 100 == 0 ? '00' : event.time % 100) + "</div>" +
         "<div class='location'><i class='fas fa-map-marker-alt'></i>" + event.location + "</div>" +
         "<div class='price'><i class='fas fa-won-sign'></i>" + event.price + "</div>" +
         "</div>" +

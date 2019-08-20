@@ -5,7 +5,9 @@ function scheduleUpdateCheck(titleArr) {
         } else {
             for(var i=0; i<titleArr.length; i++) {
                 if(!items.schedule.includes(titleArr[i])){
-                    notification('[JAMRA] 새로운 정모 일정이 등록되었습니다.', titleArr[i]);
+                    if(titleArr[i] !== 'none') {
+                        notification('[JAMRA] 새로운 정모 일정이 등록되었습니다.', titleArr[i]);
+                    }
                     updateData('schedule', {'schedule': titleArr});
                 } 
             }
