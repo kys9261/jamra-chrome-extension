@@ -105,7 +105,7 @@ ajaxGroupInfo(function(response) {
                 "</div><li>";
 
             tag += "<div class='attendants'>" +
-                "<div class='menu-title'>" + mainSchedule[i].date.toString().substring(5, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8) + "일 참석자<i class='fas fa-chevron-down'></i></div>" +
+                "<div class='menu-title'>" + mainSchedule[i].date.toString().substring(4, 6) + '/' + mainSchedule[i].date.toString().substring(6, 8) + "일 참석자<i class='fas fa-chevron-down'></i></div>" +
                 "<div class='collapse' id='event" + i + "Attend'>" +
                 "<div class='card card-body'>" +
                 "<ul class='event" + mainSchedule[i].num + "-list'></ul>" +
